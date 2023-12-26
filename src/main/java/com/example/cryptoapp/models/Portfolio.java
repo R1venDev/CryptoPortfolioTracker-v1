@@ -1,21 +1,14 @@
 package com.example.cryptoapp.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class Portfolio {
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@Table(name = "Portfolio", schema = "cryptoappschema")
+public class Portfolio extends BaseModel {
     private int userId;
     private String name;
     private double pnl;
-
 
     public Portfolio(Long id, int userId, String portfolioName, double pnl) {
         this.id = id;
@@ -24,8 +17,8 @@ public class Portfolio {
         this.pnl = pnl;
     }
 
-    public Long getId() {
-        return id;
+    public Portfolio() {
+
     }
 
     public int getUserId() {

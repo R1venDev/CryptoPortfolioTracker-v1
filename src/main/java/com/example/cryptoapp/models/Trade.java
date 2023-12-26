@@ -1,14 +1,11 @@
 package com.example.cryptoapp.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Trade {
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@Table(name = "Trade", schema = "cryptoappschema")
+public class Trade extends BaseModel {
     private Date startDate;
     private Date endDate;
     @Enumerated(EnumType.STRING)
@@ -41,8 +38,8 @@ public class Trade {
         this.tradeAmount = assetPrice * assetQuantity * leverage;
     }
 
-    public Long getId() {
-        return id;
+    public Trade() {
+
     }
 
     public Date getStartDate() {

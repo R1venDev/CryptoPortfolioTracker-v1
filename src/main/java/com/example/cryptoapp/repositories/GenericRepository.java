@@ -1,27 +1,32 @@
 package com.example.cryptoapp.repositories;
 
-import com.example.cryptoapp.models.User;
 
-import org.hibernate.*;
+import com.example.cryptoapp.models.BaseModel;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class UserRepository implements IRepository<User> {
+public class GenericRepository<T extends BaseModel> implements IRepository<T> {
     private SessionFactory sessionFactory;
+    private final String query;
+    private final Class<T> classType;
 
-    public UserRepository(SessionFactory sessionFactory) {
-            this.sessionFactory = sessionFactory;
-        }
+    public GenericRepository(Class<T> type, String query, SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        this.classType = type;
+        this.query = query;
+    }
 
     @Override
-    public void save(User user) {
+    public void save(T entity) {
         Transaction transaction = null;
 
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(user);
+            session.save(entity);
             transaction.commit();
         }
         catch(Exception ex) {
@@ -33,14 +38,14 @@ public class UserRepository implements IRepository<User> {
     }
 
     @Override
-    public User findById(Long id) {
+    public T findById(Long id) {
         Transaction transaction = null;
 
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            User user = session.get(User.class, id);
+            T entity = session.get(this.classType, id);
             transaction.commit();
-            return user;
+            return entity;
         }
         catch(Exception ex) {
             if(transaction != null) {
@@ -57,21 +62,21 @@ public class UserRepository implements IRepository<User> {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<T> findAll() {
         Transaction transaction = null;
 
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            List<User> users = session.createQuery("FROM com.example.cryptoapp.models.User", User.class).list();
+            List<T> entities = session.createQuery(this.query, this.classType).list();
             transaction.commit();
-            return users;
+            return entities;
         }
         catch(Exception ex) {
             if(transaction != null) {
                 transaction.rollback();
             }
             System.out.println(ex.getClass().getName() + "occured: \n" + ex.getMessage());
-            return new ArrayList<User>();
+            return new ArrayList<T>();
         }
         finally {
             if (sessionFactory != null) {
@@ -81,16 +86,16 @@ public class UserRepository implements IRepository<User> {
     }
 
     @Override
-    public void update(User user) throws NullPointerException {
-        if(user == null) {
-            throw new NullPointerException("User to update cannot be null.");
+    public void update(T entity) throws NullPointerException {
+        if(entity == null) {
+            throw new NullPointerException(this.classType.getName() + " to update cannot be null.");
         }
 
         Transaction transaction = null;
 
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.update(user);
+            session.merge(entity);
             transaction.commit();
         }
         catch(Exception ex) {
@@ -112,14 +117,14 @@ public class UserRepository implements IRepository<User> {
 
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            User user = session.get(User.class, id);
-            if(user != null) {
-                session.delete(user);
+            T entity = session.get(this.classType, id);
+            if(entity != null) {
+                session.remove(entity);
                 transaction.commit();
             }
             else {
                 transaction.rollback();
-                throw new NullPointerException("User to delete wasn't found.");
+                throw new NullPointerException(this.classType.getName() + "to delete wasn't found.");
             }
         }
         catch(Exception ex) {
@@ -135,5 +140,3 @@ public class UserRepository implements IRepository<User> {
         }
     }
 }
-
-

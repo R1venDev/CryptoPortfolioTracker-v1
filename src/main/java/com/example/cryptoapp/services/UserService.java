@@ -50,12 +50,13 @@ public class UserService {
 
         if (isEmailAlreadyExists(user.getEmail())) {
             throw new ValidationException("User with this email already exists.");
+
         }
     }
 
-    private boolean isEmailAlreadyExists(String email) {
-        List<User> existingUsers = userRepository.findAll();
-        return existingUsers.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email));
-    }
+        private boolean isEmailAlreadyExists(String email) {
+            List<User> existingUsers = userRepository.findAll();
+            return existingUsers.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email));
+        }
 
-}
+    }

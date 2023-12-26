@@ -2,11 +2,12 @@ module com.example.cryptoapp {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
-    requires java.persistence;
     requires org.yaml.snakeyaml;
     requires java.naming;
+    requires java.sql;
+    requires jakarta.persistence;
 
-
+    opens com.example.cryptoapp.models to org.hibernate.orm.core;
     opens com.example.cryptoapp to javafx.fxml;
     exports com.example.cryptoapp;
 }

@@ -1,17 +1,19 @@
 
 package com.example.cryptoapp.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "User", schema = "cryptoappschema")
+public class User extends BaseModel {
     @Enumerated(EnumType.STRING)
+    @Column(name="userType")
     private UserType userType;
+    @Column(name="firstName")
     private String firstName;
+    @Column(name="lastName")
     private String lastName;
+    @Column(name="email")
     private String email;
 
     public User(Long id, UserType userType, String firstName, String lastName, String email) {
@@ -22,8 +24,8 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public User() {
+
     }
 
     public UserType getUserType() {
