@@ -3,60 +3,30 @@ package com.example.cryptoapp.services;
 import com.example.cryptoapp.exceptions.ValidationException;
 import com.example.cryptoapp.models.User;
 import com.example.cryptoapp.repositories.IRepository;
+import com.example.cryptoapp.validators.IUserValidator;
 
-import java.util.List;
+public class UserService extends GenericEntityService<User> {
+    public IUserValidator userValidator;
 
-public class UserService {
-    private IRepository<User> userRepository;
+    public UserService(IRepository<User> repository, IUserValidator validator) {
+        super(repository, validator);
 
-    public UserService(IRepository<User> userRepository) {
-        this.userRepository = userRepository;
+        this.userValidator = validator;
     }
 
-    public void addUser(User user) throws ValidationException {
-        validateUser(user);
-        userRepository.save(user);
+    @Override
+    public void add(User entity) throws ValidationException {
+        validator.validateEntity(entity);
+        userValidator.doExtraValidationChecks(entity, repository.findAll());
+
+        repository.save(entity);
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id);
+    @Override
+    public void update(User entity) throws ValidationException {
+        validator.validateEntity(entity);
+        userValidator.doExtraValidationChecks(entity, repository.findAll());
+
+        repository.update(entity);
     }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public void updateUser(User user) throws ValidationException {
-        validateUser(user);
-        userRepository.update(user);
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.delete(id);
-    }
-
-    private void validateUser(User user) throws ValidationException {
-        if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
-            throw new ValidationException("User first name cannot be empty.");
-        }
-
-        if (user.getLastName() == null || user.getLastName().isEmpty()) {
-            throw new ValidationException("User lastname cannot be empty.");
-        }
-
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            throw new ValidationException("User email cannot be empty.");
-        }
-
-        if (isEmailAlreadyExists(user.getEmail())) {
-            throw new ValidationException("User with this email already exists.");
-
-        }
-    }
-
-        private boolean isEmailAlreadyExists(String email) {
-            List<User> existingUsers = userRepository.findAll();
-            return existingUsers.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email));
-        }
-
-    }
+}

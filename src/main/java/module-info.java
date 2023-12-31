@@ -7,7 +7,7 @@ module com.example.cryptoapp {
     requires java.sql;
     requires jakarta.persistence;
 
-    opens com.example.cryptoapp.models to org.hibernate.orm.core;
+    opens com.example.cryptoapp.models to org.hibernate.orm.core, javafx.base;
     opens com.example.cryptoapp to javafx.fxml;
     exports com.example.cryptoapp;
 }

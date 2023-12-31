@@ -45,6 +45,16 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
             transaction = session.beginTransaction();
             T entity = session.get(this.classType, id);
             transaction.commit();
+
+            if(entity != null)
+            {
+                System.out.println(this.classType.getName() + " was found by id (" + id + ")");
+            }
+            else
+            {
+                throw new Exception(this.classType.getName() + "wasn't found by id=(" + id + ")");
+            }
+
             return entity;
         }
         catch(Exception ex) {
@@ -69,6 +79,16 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
             transaction = session.beginTransaction();
             List<T> entities = session.createQuery(this.query, this.classType).list();
             transaction.commit();
+
+            if(entities != null)
+            {
+                System.out.println(entities.stream().count() + " items of type "+ this.classType.getName() + " were found");
+            }
+            else
+            {
+                System.out.println("findAll() of type "+ this.classType.getName() + " retured null.");
+            }
+
             return entities;
         }
         catch(Exception ex) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.cryptoapp.PortfoliosController">
+
+    <Label fx:id="headerText">Список существующих пользователей:</Label>
+    <!--TableView fx:id="userTableView" prefHeight="400.0" prefWidth="600.0">
+        <columns>
+            <TableColumn text="Id" fx:id="idColumn" visible="false" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="User Type" fx:id="userTypeColumn" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="userType"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="First Name" fx:id="firstNameColumn" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="firstName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Last Name" fx:id="lastNameColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="lastName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Email" fx:id="emailColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="email"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    <Button text="Просмотр портфелей выбранного пользователя" onAction="#onShowPortfolioClick"/-->
+</VBox>
+
