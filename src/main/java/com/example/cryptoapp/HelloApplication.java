@@ -15,13 +15,12 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println("SF is null: [" + (this.sessionFactory == null) + "]");
-
         this.sessionFactory = HibernateSessionFactory.getSessionFactory();
         ServiceFactory sf = ServiceFactory.getInstance();
 
         FXMLLoader helloLoader = new FXMLLoader(getClass().getResource("main-view.fxml"));
         Parent helloParent = helloLoader.load();
+
         Scene scene = new Scene(helloParent, 320, 240);
         stage.setTitle("Добро пожаловать!");
         stage.setScene(scene);

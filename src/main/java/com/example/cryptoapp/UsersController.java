@@ -61,15 +61,6 @@ public class UsersController extends BaseController{
             users = new ArrayList<>();
         }
         else {
-            /*userService.add(
-                    new User(123L, UserType.INVESTOR,
-                            "Investorov", "Ivan",
-                            "invivan@mail.box"));
-            userService.add(
-                    new User(4456L, UserType.TRADER,
-                            "Traderova", "Irina",
-                            "irinatr@mail.box"));*/
-
             var findAllResult = userService.findAll();
             users = findAllResult != null ? findAllResult : new ArrayList<>();
         }
@@ -80,34 +71,32 @@ public class UsersController extends BaseController{
 
     @FXML
     public void onShowPortfolioClick() {
-        userTableView.getSelectionModel()
-                .selectedItemProperty()
-                .addListener((obs, oldSelectedUser, newSelectedUser) -> {
-            if (newSelectedUser != null) {
-                FXMLLoader portfoliosLoader = new FXMLLoader(getClass().getResource("portfolios-view.fxml"));
-                FXMLLoader portfolioLoader = new FXMLLoader(getClass().getResource("portfolios-view.fxml"));
-                try {
-                    Parent portfolioParent = portfolioLoader.load();
-                    PortfoliosController controller = portfolioLoader.getController();
-                    controller.setSelectedUserId(newSelectedUser.getId());
+        System.out.println("onShowPortfolioClick executed!");
 
-                    Stage portfoliosStage = new Stage();
-                    portfoliosStage.setTitle("Портфели пользователя");
-                    portfoliosStage.setScene(new Scene(portfolioParent, 500, 200));
-                    portfoliosStage.show();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                }
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedUser != null) {
+            System.out.println("Selection changed to user with id: " + selectedUser.getId());
+
+            FXMLLoader portfolioLoader = new FXMLLoader(getClass().getResource("portfolios-view.fxml"));
+            try{
+                portfolioLoader.setControllerFactory(controllerClass -> new PortfoliosController(selectedUser.getId()));
+                Parent portfolioParent = portfolioLoader.load();
+
+                Stage portfoliosStage = CreateNewStage("Портфели пользователя", portfolioParent, 500, 200);
+                portfoliosStage.show();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
-            else {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Ошибка");
-                alert.setHeaderText(null);
-                alert.setContentText("Сначала выберите пользователя в таблице!");
-                alert.showAndWait();
-            }
-        });
+        }
+        else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            alert.setContentText("Сначала выберите пользователя в таблице!");
+            alert.showAndWait();
+        }
     }
 }
 
