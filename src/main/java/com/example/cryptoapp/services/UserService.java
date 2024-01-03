@@ -10,23 +10,25 @@ public class UserService extends GenericEntityService<User> {
 
     public UserService(IRepository<User> repository, IUserValidator validator) {
         super(repository, validator);
-
+        this.repository = repository;
         this.userValidator = validator;
     }
 
     @Override
     public void add(User entity) throws ValidationException {
-        validator.validateEntity(entity);
-        userValidator.doExtraValidationChecks(entity, repository.findAll());
+        System.out.println("User service add() called with null repository: " + (this.repository == null));
 
-        repository.save(entity);
+        validator.validateEntity(entity);
+        userValidator.doExtraValidationChecks(entity, this.repository.findAll());
+
+        this.repository.save(entity);
     }
 
     @Override
     public void update(User entity) throws ValidationException {
         validator.validateEntity(entity);
-        userValidator.doExtraValidationChecks(entity, repository.findAll());
+        userValidator.doExtraValidationChecks(entity, this.repository.findAll());
 
-        repository.update(entity);
+        this.repository.update(entity);
     }
 }

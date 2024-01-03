@@ -24,16 +24,21 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
     public void save(T entity) {
         Transaction transaction = null;
 
-        try(Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
-        }
-        catch(Exception ex) {
-            if(transaction != null) {
+        } catch (Exception ex) {
+            if (transaction != null) {
                 transaction.rollback();
             }
             System.out.println(ex.getClass().getName() + "occured: \n" + ex.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -41,7 +46,9 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
     public T findById(Long id) {
         Transaction transaction = null;
 
-        try(Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             T entity = session.get(this.classType, id);
             transaction.commit();
@@ -65,8 +72,8 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
             return null;
         }
         finally {
-            if (sessionFactory != null) {
-                sessionFactory.close();
+            if (session != null) {
+                session.close();
             }
         }
     }
@@ -75,32 +82,29 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
     public List<T> findAll() {
         Transaction transaction = null;
 
-        try(Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             List<T> entities = session.createQuery(this.query, this.classType).list();
             transaction.commit();
 
-            if(entities != null)
-            {
-                System.out.println(entities.stream().count() + " items of type "+ this.classType.getName() + " were found");
-            }
-            else
-            {
-                System.out.println("findAll() of type "+ this.classType.getName() + " retured null.");
+            if (entities != null) {
+                System.out.println(entities.stream().count() + " items of type " + this.classType.getName() + " were found");
+            } else {
+                System.out.println("findAll() of type " + this.classType.getName() + " retured null.");
             }
 
             return entities;
-        }
-        catch(Exception ex) {
-            if(transaction != null) {
+        } catch (Exception ex) {
+            if (transaction != null) {
                 transaction.rollback();
             }
             System.out.println(ex.getClass().getName() + "occured: \n" + ex.getMessage());
             return new ArrayList<T>();
-        }
-        finally {
-            if (sessionFactory != null) {
-                sessionFactory.close();
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
     }
@@ -113,7 +117,9 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
 
         Transaction transaction = null;
 
-        try(Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.merge(entity);
             transaction.commit();
@@ -125,8 +131,8 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
             System.out.println(ex.getClass().getName() + "occured: \n" + ex.getMessage());
         }
         finally {
-            if (sessionFactory != null) {
-                sessionFactory.close();
+            if (session != null) {
+                session.close();
             }
         }
     }
@@ -135,7 +141,9 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
     public void delete(Long id) throws NullPointerException {
         Transaction transaction = null;
 
-        try(Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             T entity = session.get(this.classType, id);
             if(entity != null) {
@@ -154,8 +162,8 @@ public class GenericRepository<T extends BaseModel> implements IRepository<T> {
             System.out.println(ex.getClass().getName() + "occured: \n" + ex.getMessage());
         }
         finally {
-            if (sessionFactory != null) {
-                sessionFactory.close();
+            if (session != null) {
+                session.close();
             }
         }
     }

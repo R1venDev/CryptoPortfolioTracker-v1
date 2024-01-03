@@ -6,19 +6,37 @@ import java.util.Date;
 @Entity
 @Table(name = "Trade", schema = "cryptoappschema")
 public class Trade extends BaseModel {
+    @Column(name="portfolioId")
+    private Long portfolioId;
+
+    @Column(name="startDate")
     private Date startDate;
+
+    @Column(name="endDate")
     private Date endDate;
     @Enumerated(EnumType.STRING)
+    @Column(name="tradeStatus")
     private TradeStatus tradeStatus;
-    @Enumerated(EnumType.STRING)
-    private TradeResult tradeState;
-    @Enumerated(EnumType.STRING)
-    private TradeType tradeType;
-    private double assetQuantity;
-    private double assetPrice;
-    private double tradeAmount;
-    private double leverage;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="tradeState")
+    private TradeResult tradeState;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="tradeType")
+    private TradeType tradeType;
+
+    @Column(name="assetQuantity")
+    private double assetQuantity;
+
+    @Column(name="assetPrice")
+    private double assetPrice;
+
+    @Column(name="assetAmount")
+    private double tradeAmount;
+
+    @Column(name="leverage")
+    private double leverage;
 
     public Trade(Long id, Date startDate, Date endDate, TradeStatus tradeStatus,
                  TradeResult tradeState, TradeType tradeType, double assetQuantity,
@@ -31,15 +49,19 @@ public class Trade extends BaseModel {
         this.tradeType = tradeType;
         this.assetQuantity = assetQuantity;
         this.assetPrice = assetPrice;
-        if (tradeType == TradeType.LONG || tradeType == TradeType.SHORT)
-        {
-            this.leverage = leverage;}
-        else this.leverage=1.0;
+        if (tradeType == TradeType.LONG || tradeType == TradeType.SHORT) {
+            this.leverage = leverage;
+        }
+        else { this.leverage = 1.0; }
         this.tradeAmount = assetPrice * assetQuantity * leverage;
     }
 
     public Trade() {
 
+    }
+
+    public Long getPortfolioId() {
+        return portfolioId;
     }
 
     public Date getStartDate() {

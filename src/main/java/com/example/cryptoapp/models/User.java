@@ -9,10 +9,13 @@ public class User extends BaseModel {
     @Enumerated(EnumType.STRING)
     @Column(name="userType")
     private UserType userType;
+
     @Column(name="firstName")
     private String firstName;
+
     @Column(name="lastName")
     private String lastName;
+
     @Column(name="email")
     private String email;
 
@@ -24,9 +27,7 @@ public class User extends BaseModel {
         this.email = email;
     }
 
-    public User() {
-
-    }
+    public User() { }
 
     public UserType getUserType() {
         return userType;
@@ -40,12 +41,29 @@ public class User extends BaseModel {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+
     public String getLastName() {
         return lastName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

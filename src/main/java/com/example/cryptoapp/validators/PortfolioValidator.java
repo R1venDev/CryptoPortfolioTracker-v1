@@ -9,7 +9,7 @@ public class PortfolioValidator implements IValidator<Portfolio> {
             throw new ValidationException("User ID must be a positive integer.");
         }
 
-        if (portfolio.getPortfolioName() == null || portfolio.getPortfolioName().isEmpty()) {
+        if (portfolio.getName() == null || portfolio.getName().isEmpty()) {
             throw new ValidationException("Portfolio name cannot be empty.");
         }
     }

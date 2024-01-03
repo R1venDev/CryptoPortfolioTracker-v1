@@ -11,35 +11,30 @@
       fx:controller="com.example.cryptoapp.PortfoliosController">
 
     <Label fx:id="headerText">Список существующих пользователей:</Label>
-    <!--TableView fx:id="userTableView" prefHeight="400.0" prefWidth="600.0">
+    <TableView fx:id="portfolioTableView" prefHeight="400.0" prefWidth="600.0">
         <columns>
             <TableColumn text="Id" fx:id="idColumn" visible="false" >
                 <cellValueFactory>
                     <PropertyValueFactory property="id"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="User Type" fx:id="userTypeColumn" >
+            <TableColumn text="OwnerId" fx:id="userIdColumn" visible="false">
                 <cellValueFactory>
-                    <PropertyValueFactory property="userType"/>
+                    <PropertyValueFactory property="userId"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="First Name" fx:id="firstNameColumn" >
+            <TableColumn text="Name" fx:id="nameColumn" >
                 <cellValueFactory>
-                    <PropertyValueFactory property="firstName"/>
+                    <PropertyValueFactory property="name"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Last Name" fx:id="lastNameColumn">
+            <TableColumn text="PNL" fx:id="pnlColumn">
                 <cellValueFactory>
-                    <PropertyValueFactory property="lastName"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Email" fx:id="emailColumn">
-                <cellValueFactory>
-                    <PropertyValueFactory property="email"/>
+                    <PropertyValueFactory property="pnl"/>
                 </cellValueFactory>
             </TableColumn>
         </columns>
     </TableView>
-    <Button text="Просмотр портфелей выбранного пользователя" onAction="#onShowPortfolioClick"/-->
+    <Button text="Просмотр сделок выбранного портфеля" onAction="#onShowTradesClick"/>
 </VBox>
 

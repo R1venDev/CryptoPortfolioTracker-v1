@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.cryptoapp.TradesController">
+
+    <Label fx:id="headerText">Список существующих пользователей:</Label>
+    <TableView fx:id="tradeTableView" prefHeight="400.0" prefWidth="600.0">
+        <columns>
+            <TableColumn text="Id" fx:id="idColumn" visible="false" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Portfolio ID" fx:id="portfolioIdColumn" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="portfolioId"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Start date" fx:id="startDateColumn" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="startDate"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="End date" fx:id="endDateColumn" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="startDate"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Status" fx:id="tradeStatusColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="tradeStatus"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="State" fx:id="tradeStateColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="tradeState"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Asset quantity" fx:id="assetQuantityColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="assetQuantity"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Asset price" fx:id="assetPriceColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="assetPrice"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="PNL" fx:id="assetAmountColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="assetAmount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="PNL" fx:id="leverageColumn">
+                <cellValueFactory>
+                    <PropertyValueFactory property="leverage"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</VBox>

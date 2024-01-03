@@ -1,15 +1,15 @@
 package com.example.cryptoapp.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 @MappedSuperclass
 public abstract class BaseModel {
     @Id
-    @GeneratedValue
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition = "serial")
+    @Generated(GenerationTime.INSERT)
     public Long id;
 
     public Long getId() {

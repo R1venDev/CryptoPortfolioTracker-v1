@@ -10,4 +10,6 @@ module com.example.cryptoapp {
     opens com.example.cryptoapp.models to org.hibernate.orm.core, javafx.base;
     opens com.example.cryptoapp to javafx.fxml;
     exports com.example.cryptoapp;
+    exports com.example.cryptoapp.utils;
+    opens com.example.cryptoapp.utils to javafx.fxml;
 }

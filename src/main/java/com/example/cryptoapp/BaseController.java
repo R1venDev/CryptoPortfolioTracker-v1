@@ -6,6 +6,7 @@ import com.example.cryptoapp.models.Portfolio;
 import com.example.cryptoapp.services.IEntityService;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public abstract class BaseController {
@@ -23,10 +24,21 @@ public abstract class BaseController {
         this.portfolioService = portfolioService;
     }
 
-    protected Stage CreateNewStage(String title, Parent stageParent, int v, int v1){
+    protected Stage createNewStage(String title, Parent stageParent, int v, int v1){
         Stage newStage = new Stage();
         newStage.setTitle("Портфели пользователя");
         newStage.setScene(new Scene(stageParent, v, 200));
         return newStage;
     }
+
+
+    void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
 }
