@@ -4,6 +4,7 @@ import com.example.cryptoapp.models.User;
 import com.example.cryptoapp.models.Trade;
 import com.example.cryptoapp.models.Portfolio;
 import com.example.cryptoapp.services.IEntityService;
+import com.example.cryptoapp.services.IPortfolioService;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 public abstract class BaseController {
     protected IEntityService<User> userService;
     protected IEntityService<Trade> tradeService;
-    protected IEntityService<Portfolio> portfolioService;
+    protected IPortfolioService portfolioService;
 
     public void setUserService(IEntityService<User> userService) {
         this.userService = userService;
@@ -20,7 +21,7 @@ public abstract class BaseController {
     public void setTradeService(IEntityService<Trade> tradeService) {
         this.tradeService = tradeService;
     }
-    public void setPortfolioService(IEntityService<Portfolio> portfolioService) {
+    public void setPortfolioService(IPortfolioService portfolioService) {
         this.portfolioService = portfolioService;
     }
 
@@ -32,7 +33,7 @@ public abstract class BaseController {
     }
 
 
-    void showAlert(String title, String content) {
+    protected void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

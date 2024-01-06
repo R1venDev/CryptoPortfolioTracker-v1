@@ -32,6 +32,7 @@ public class Trade extends BaseModel {
     @Column(name="assetPrice")
     private double assetPrice;
 
+
     @Column(name="assetAmount")
     private double tradeAmount;
 
@@ -99,6 +100,12 @@ public class Trade extends BaseModel {
     public double getLeverage() {
         return leverage;
     }
+
+    public double getPNL(double assetPriceNow) {
+        return (assetPriceNow-assetPrice)*leverage;
+    }
+
 }
+
 
 

@@ -4,9 +4,7 @@ import com.example.cryptoapp.models.Portfolio;
 import com.example.cryptoapp.models.Trade;
 import com.example.cryptoapp.models.User;
 import com.example.cryptoapp.repositories.GenericRepository;
-import com.example.cryptoapp.services.GenericEntityService;
-import com.example.cryptoapp.services.IEntityService;
-import com.example.cryptoapp.services.UserService;
+import com.example.cryptoapp.services.*;
 import com.example.cryptoapp.validators.PortfolioValidator;
 import com.example.cryptoapp.validators.TradeValidator;
 import com.example.cryptoapp.validators.UserValidator;
@@ -17,7 +15,7 @@ public class ServiceFactory {
 
     private final IEntityService<User> userService;
     private final IEntityService<Trade> tradeService;
-    private final IEntityService<Portfolio> portfolioService;
+    private final IPortfolioService portfolioService;
 
     private ServiceFactory() {
         SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
@@ -41,7 +39,7 @@ public class ServiceFactory {
         var tradeValidator = new TradeValidator();
 
         this.userService = new UserService(userRepository, userValidator);
-        this.portfolioService = new GenericEntityService<Portfolio>(portfolioRepository, portfolioValidator);
+        this.portfolioService = new PortfolioService(tradeRepository, portfolioRepository, portfolioValidator);
         this.tradeService = new GenericEntityService<Trade>(tradeRepository, tradeValidator);
     }
 
@@ -64,7 +62,7 @@ public class ServiceFactory {
         return tradeService;
     }
 
-    public IEntityService<Portfolio> getPortfolioService() {
+    public IPortfolioService getPortfolioService() {
         return portfolioService;
     }
 }

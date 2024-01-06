@@ -18,20 +18,14 @@ public abstract class TableViewBaseController<T extends BaseModel>
     @FXML
     protected TableView<T> tableView;
 
-    public abstract IEntityService<T> getTableViewItemsService();
+    public abstract List<T> getTableViewItems();
 
     public void updateTableViewContent() {
         List<T> entities;
-        IEntityService<T> entityService = getTableViewItemsService();
 
-        if(entityService == null) {
-            System.out.println("[!] Users controller initialized with null userService");
-            entities = new ArrayList<>();
-        }
-        else {
-            var findAllResult = entityService.findAll();
-            entities = findAllResult != null ? findAllResult : new ArrayList<>();
-        }
+        var findAllResult = getTableViewItems();
+        entities = findAllResult != null ? findAllResult : new ArrayList<>();
+
 
         System.out.println("TableView-inherited controller updated its table with " + entities.stream().count() + " items.");
 

@@ -12,14 +12,10 @@ public class Portfolio extends BaseModel {
     @Column(name="name")
     private String name;
 
-    @Column(name="pnl")
-    private double pnl;
-
-    public Portfolio(Long id, Long userId, String portfolioName, double pnl) {
+    public Portfolio(Long id, Long userId, String portfolioName) {
         this.id = id;
         this.userId = userId;
         this.name = portfolioName;
-        this.pnl = pnl;
     }
 
     public Portfolio() {
@@ -34,11 +30,4 @@ public class Portfolio extends BaseModel {
         return name;
     }
 
-    public double getPnl() {
-        return pnl;
-    }
-
-    public void setPnl(double pnlChange) {
-        this.pnl = pnlChange;
-    }
 }

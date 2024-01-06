@@ -44,5 +44,4 @@
     <Button text="Добавить пользователя" onAction="#onAddUserClick"/>
     <Button text="Изменить выбранного пользователя" onAction="#onEditUserClick"/>
     <Button text="Удалить выбранного пользователя" onAction="#onDeleteUserClick"/>
-    <Button text="Портфели" onAction="#onPortfoliosButtonClick"/>
 </VBox>
