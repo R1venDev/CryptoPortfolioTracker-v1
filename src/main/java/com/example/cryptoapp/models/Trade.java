@@ -19,8 +19,8 @@ public class Trade extends BaseModel {
     private TradeStatus tradeStatus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="tradeState")
-    private TradeResult tradeState;
+    @Column(name="tradeResult")
+    private TradeResult tradeResult;
 
     @Enumerated(EnumType.STRING)
     @Column(name="tradeType")
@@ -39,14 +39,15 @@ public class Trade extends BaseModel {
     @Column(name="leverage")
     private double leverage;
 
-    public Trade(Long id, Date startDate, Date endDate, TradeStatus tradeStatus,
-                 TradeResult tradeState, TradeType tradeType, double assetQuantity,
+    public Trade(Long id, Long portfolioId, Date startDate, Date endDate, TradeStatus tradeStatus,
+                 TradeResult tradeResult, TradeType tradeType, double assetQuantity,
                  double assetPrice, double leverage) {
         this.id = id;
+        this.portfolioId = portfolioId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.tradeStatus = tradeStatus;
-        this.tradeState = tradeState;
+        this.tradeResult = tradeResult;
         this.tradeType = tradeType;
         this.assetQuantity = assetQuantity;
         this.assetPrice = assetPrice;
@@ -54,7 +55,6 @@ public class Trade extends BaseModel {
             this.leverage = leverage;
         }
         else { this.leverage = 1.0; }
-        this.tradeAmount = assetPrice * assetQuantity * leverage;
     }
 
     public Trade() {
@@ -77,8 +77,8 @@ public class Trade extends BaseModel {
         return tradeStatus;
     }
 
-    public TradeResult getTradeState() {
-        return tradeState;
+    public TradeResult getTradeResult() {
+        return tradeResult;
     }
 
     public TradeType getTradeType() {
@@ -93,15 +93,15 @@ public class Trade extends BaseModel {
         return assetPrice;
     }
 
-    public double getTradeAmount() {
-        return tradeAmount;
+    public double countTradeAmount() {
+        return assetPrice * assetQuantity * leverage;
     }
 
     public double getLeverage() {
         return leverage;
     }
 
-    public double getPNL(double assetPriceNow) {
+    public double countPNL(double assetPriceNow) {
         return (assetPriceNow-assetPrice)*leverage;
     }
 

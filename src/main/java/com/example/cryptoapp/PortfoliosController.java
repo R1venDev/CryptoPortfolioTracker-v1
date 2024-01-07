@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PortfoliosController extends TableViewBaseController<PortfolioViewModel>{
+public class PortfoliosController extends TableViewBaseController<PortfolioViewModel> implements ITradesListener{
 
     public PortfoliosController(Long selectedUserId, double assetPriceNow) {
         this.selectedUserId = selectedUserId;
@@ -50,7 +50,7 @@ public class PortfoliosController extends TableViewBaseController<PortfolioViewM
     public List<PortfolioViewModel> getTableViewItems() {
         return this.portfolioService.findAll().stream()
                 .filter(x -> x.getUserId() == selectedUserId)
-                .map(x -> new PortfolioViewModel(x,this.portfolioService.getPNL(x.getId(), assetsPriceNow))).toList();
+                .map(x -> new PortfolioViewModel(x,this.portfolioService.countPNL(x.getId(), assetsPriceNow))).toList();
     }
 
 
@@ -68,7 +68,7 @@ public class PortfoliosController extends TableViewBaseController<PortfolioViewM
         updateTableViewContent();
 
         User portfolioOwner = userService.findById(selectedUserId);
-        headerText.setText("Портфели пользователя " + portfolioOwner.getFirstName() + " "+ portfolioOwner.getLastName() + "(Текущая цена актива: "+this.assetsPriceNow+")");
+        headerText.setText("Портфели пользователя " + portfolioOwner.getFirstName() + " "+ portfolioOwner.getLastName() + " (Текущая цена актива: "+this.assetsPriceNow+")");
 
     }
 
@@ -86,7 +86,7 @@ public class PortfoliosController extends TableViewBaseController<PortfolioViewM
             FXMLLoader tradeLoader = new FXMLLoader(getClass().getResource("trades-view.fxml"));
 
             try{
-                tradeLoader.setControllerFactory(controllerClass -> new TradesController(selectedPortfolio.getId()));
+                tradeLoader.setControllerFactory(controllerClass -> new TradesController(selectedPortfolio.getId(), assetsPriceNow, this));
                 Parent tradeParent = tradeLoader.load();
 
                 Stage tradeStage = createNewStage("Сделки портфеля:", tradeParent, 500, 200);
@@ -152,4 +152,8 @@ public class PortfoliosController extends TableViewBaseController<PortfolioViewM
         }
     }
 
+    @Override
+    public void onTradesWindowChanges() {
+        updateTableViewContent();
+    }
 }

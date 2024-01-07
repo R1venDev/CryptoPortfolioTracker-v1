@@ -49,7 +49,7 @@ public class CreateUpdateUsersController extends FormBaseController {
             lastNameTextField.setText(updatedUser.getLastName());
             emailTextField.setText(updatedUser.getEmail());
             userTypeComboBox.setValue(updatedUser.getUserType().toString());
-            // TODO: FINISH FIELDS VALUE INITIALIZATION!
+
             updateSaveButtonText(type);
         }
     }
@@ -113,7 +113,7 @@ public class CreateUpdateUsersController extends FormBaseController {
     }
 
     private User initializeUser(String userType, String firstName, String lastName, String email) {
-        // TODO: CONVERT STRING VALUES TO USER'S FIELDS VALUES. E.G. String -> enum
+
         User user = new User();
         user.setUserType(EnumConvertor.stringValueToEnum(UserType.class, userType));
 
@@ -134,8 +134,6 @@ public class CreateUpdateUsersController extends FormBaseController {
 
     private void updateSaveButtonText(FormType type)
     {
-        // TODO: Update button text to certain values
-        // depending on type value
         String buttonText;
         if (type == FormType.CREATE) {
             buttonText = "Добавить пользователя";

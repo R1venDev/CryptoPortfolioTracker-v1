@@ -14,10 +14,10 @@ public class PortfolioService extends GenericEntityService<Portfolio> implements
         this.tradeRepository = tradeRepository;
     }
 
-    public double getPNL (Long portfolioId, double assetPriceNow) {
+    public double countPNL (Long portfolioId, double assetPriceNow) {
         return tradeRepository.findAll().stream()
                         .filter(x -> x.getPortfolioId() == portfolioId)
-                .mapToDouble(x -> x.getPNL(assetPriceNow)).sum();
+                .mapToDouble(x -> x.countPNL(assetPriceNow)).sum();
 
     }
 }

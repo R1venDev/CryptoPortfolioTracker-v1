@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cryptoapp.controllers.CreateUpdateTradeController">
+    <Label text="Start Date:" />
+    <TextField fx:id="startDateTextField" />
+
+    <Label text="End Date:" />
+    <TextField fx:id="endDateTextField" />
+
+    <Label text="Assets Quantity:" />
+    <TextField fx:id="assetsQuantityTextField" />
+
+    <Label text="Assets Price:" />
+    <TextField fx:id="assetsPriceTextField" />
+
+    <Label text="Leverage:" />
+    <TextField fx:id="leverageTextField" />
+
+    <Label text="Trade Status:" />
+    <ComboBox fx:id="tradeStatusComboBox" />
+
+    <Label text="Trade Type:" />
+    <ComboBox fx:id="tradeTypeComboBox" />
+
+    <Label text="Trade Result:" />
+    <ComboBox fx:id="tradeResultComboBox" />
+
+    <Button fx:id="saveButton" onAction="#onSaveButtonClick" text="Save" />
+</VBox>
